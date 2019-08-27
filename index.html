@@ -1,158 +1,177 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8">
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+<link rel="stylesheet" type="text/css" href="style.css">
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="jquery-1.2.6.pack.js"></script>
-<script type="text/javascript" src="jquery.maskedinput-1.1.4.pack.js"/></script>
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <script type="text/javascript">
-	function mascara(t, mask){
- var i = t.value.length;
- var saida = mask.substring(1,0);
- var texto = mask.substring(i)
- if (texto.substring(0,1) != saida){
- t.value += texto.substring(0,1);
- }
- }
-
+function mascara(t, mask){
+  var i = t.value.length;
+  var saida = mask.substring(1,0);
+  var texto = mask.substring(i)
+    if (texto.substring(0,1) != saida){
+    t.value += texto.substring(0,1);
+    }
+}
+</script>
+<script type="text/javascript">
+  var caracteresPossiveis = new Array('1','2','3','4','5','6','7','8','9','0');
+  var qtdCaracteres = caracteresPossiveis.length;
+    function verificaCaractere(campo){
+      var texto = campo.value;
+      var qtdCaracteresCampo = campo.value.length;
+      var textoSemUltimoCaractere = texto.slice(0, qtdCaracteresCampo-1);
+      var ultimoCaractere = texto.charAt(qtdCaracteresCampo-1);
+      var permitido = false;
+        for(var i = 0; i<qtdCaracteres; i++){
+            if(ultimoCaractere==caracteresPossiveis[i]){
+                permitido = true;
+            }
+        }
+        if(permitido==false){
+            campo.value = textoSemUltimoCaractere;
+        }
+    }
 </script>
 
+
+<!--IMPRIMIR AS INFORMAÇÕES-->
+
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script type="text/javascript">
+function createCookie(name, value, days) {
+    var date, expires;
+    if (days) {
+        date = new Date();
+        date.setTime(date.getTime()+(days*24*60*60*1000));
+        expires = "; expires="+date.toGMTString();
+    } else {
+        expires = " ";
+    }
+    document.cookie = name+"="+value+expires+"; path=/";
+}
+function getCookieData(name) {
+  var value = "; " + document.cookie;
+  var parts = value.split("; " + name + "=");
+  if (parts.length == 2) return parts.pop().split(";").shift();
+}
+function setObj(eln){
+    var rr = false;
+    if( document.all ){
+        if(  document.all[eln]  ){
+        rr = document.all[eln];
+        }
+    }else{
+        if(  document[eln]  ){
+        rr = document[eln]; 
+        }else{
+            if(  document.getElementById(eln)  ){
+            rr = document.getElementById(eln );
+            }
+        }
+    }
+    return rr;
+}
 
-                var caracteresPossiveis = new Array('1','2','3','4','5','6','7','8','9','0');
-                var qtdCaracteres = caracteresPossiveis.length;
+function GetURLParameters(){
+    var sstr = getCookieData("frm1");
+    if (!sstr)
+        return null;
+    var arr = sstr.split(' ');
+    if (arr.length < 1 || arr[0] == " ")
+        return null;
 
-                function verificaCaractere(campo){
-                    var texto = campo.value;
-                    var qtdCaracteresCampo = campo.value.length;
+    var rs = new Array();
+    for (var i = 0; i < arr.length; i++){
+        var KeyValuePair = arr[i].split('=');
+        rs[KeyValuePair[0]] = decodeURI(KeyValuePair[1]);
+    }
+    return rs;
+}
 
-                    var textoSemUltimoCaractere = texto.slice(0, qtdCaracteresCampo-1);
-                    var ultimoCaractere = texto.charAt(qtdCaracteresCampo-1);
+//p = getCookieData("frm1");
+p = GetURLParameters();
+console.log(p);
+</script>
 
-                    var permitido = false;
-                    //alert(texto+"  "+qtdCaracteres+" "+textoSemUltimoCaractere+" "+ultimoCaractere+" "+permitido+" "+qtdCaracteresCampo);
-                    for(var i = 0; i<qtdCaracteres; i++){
-                        if(ultimoCaractere==caracteresPossiveis[i]){
-                            permitido = true;
-                        }
-                    }
-                    if(permitido==false){
-                        campo.value = textoSemUltimoCaractere;
-                    }
-                }
-            </script>
+<!--FIM-->
 <title>Teste</title>
 </head>
 
+
 <body>
-	<h4 class="text-center">Formulário</h4>
-	<form>
-		<div class="row">
-			<div class="form-group col-md-4">
-    			<label for="cep">CEP:</label>
-    			<input type="true" class="form-control" id="cep" onkeypress="mascara(this, '#####-###')" maxlength="9" id="hora" class="hora_minuto" onkeyup="return verificaCaractere(this)" required/>
-  			</div>
-  			<div class="form-group col-md-4">
-    			<label for="logradouro">Logradouro:</label>
-    			<input type="" class="form-control" id="logradouro" required/>
-  			</div>
-  			<div class="form-group col-md-4">
-    			<label for="numero">Número:</label>
-    			<input type="" class="form-control" id="numero" required/>
-  			</div>
-		</div>
+	<form id="frm1" name="frm1" action="index.html" method="post">
+    <h1 align="center">Formulário</h1><br>
+    	<label for="cep">CEP:</label>
+    	<input type="" name="cep" class="campo-cep" id="cep" onkeypress="mascara(this, '#####-###')" maxlength="9" id="hora" class="hora_minuto" onkeyup="return verificaCaractere(this)" required/>
+  			
+    	<label for="logradouro">Rua:</label>
+    	<input type="" name="rua" class="campo-logradouro" id="logradouro" required/>
+  			
+    	<label for="numero">Número:</label>
+    	<input type="" name="numero" class="campo-numero" id="numero" required/>
+  			
 
-		<div class="row">
-			<div class="form-group col-md-4">
-    			<label for="complemento">Complemento:</label>
-    			<input type="" class="form-control" id="complemento" required/>
-  			</div>
-  			<div class="form-group col-md-4">
-    			<label for="bairro">Bairro:</label>
-    			<input type="" class="form-control" id="bairro" required/>
-  			</div>
-  			<div class="form-group col-md-4">
-
-    			<label for="uf">Estado</label>
-    				<select class="form-control" id="uf">
-      					<option value="AC">Acre</option>
-      					<option value="AL">Alagoas</option>
-      					<option value="AP">Amapá</option>
-      					<option value="AM">Amazonas</option>
-      					<option value="BA">Bahia</option>
-      					<option value="CE">Ceará</option>
-      					<option value="DF">Distrito Federal</option>
-      					<option value="ES">Espírito Santo</option>
-      					<option value="GO">Goiás</option>
-      					<option value="MA">Maranhão</option>
-      					<option value="MT">Mato Grosso</option>
-      					<option value="MS">Mato Grosso do Sul</option>
-      					<option value="MG">Minas Gerais</option>
-      					<option value="PA">Pará</option>
-      					<option value="PB">Paraíba</option>
-      					<option value="PR">Paraná</option>
-      					<option value="PE">Pernambuco</option>
-      					<option value="PI">Piauí</option>
-      					<option value="RJ">Rio de Janeiro</option>
-      					<option value="RN">Rio Grande do Norte</option>
-      					<option value="RS">Rio Grande do Sul</option>
-      					<option value="RO">Rondônia</option>
-      					<option value="RR">Roraima</option>
-      					<option value="SC">Santa Catarina</option>
-      					<option value="SP">São Paulo</option>
-      					<option value="SE">Sergipe</option>
-      					<option value="TO">Tocantins</option>
-    				</select>
-  				</div>
-			</div>
-		</form>
+    	<label for="complemento">Complemento:</label>
+    	<input type="" name="complemento" class="campo-complemento" id="complemento" required/>
+  			
+    	<label for="bairro">Bairro:</label>
+    	<input type="" name="bairro" class="campo-bairro" id="bairro" required/>
   		
+    <p class="enviar">
+      <input type="submit" name="enviar" value="Enviar">
+    </p>
+		</form>
 
-  			<button type="submit" class="btn btn-primary">Submit</button>
+<!-- IMPRIMIR AS IFORMAÇÕES -->
+<script type="text/javascript">
 
-		</div>
+p = GetURLParameters();
+if (p)
+    for (k in p) 
+        if (document.getElementById(k) !== null)
+            document.getElementById(k).value = p[k];
 
-	</form>
-</div>
+createCookie("frm1", " ", -1);
 
-  
-  
-  
-  <script type="text/javascript">
-    $("#cep").focusout(function(){
-      //Início do Comando AJAX
-      $.ajax({
-        //O campo URL diz o caminho de onde virá os dados
-        //É importante concatenar o valor digitado no CEP
-        url: 'https://api.postmon.com.br/v1/cep/'+$(this).val(),
-        //Aqui você deve preencher o tipo de dados que será lido,
-        //no caso, estamos lendo JSON.
-        dataType: 'json',
-        //SUCESS é referente a função que será executada caso
-        //ele consiga ler a fonte de dados com sucesso.
-        //O parâmetro dentro da função se refere ao nome da variável
-        //que você vai dar para ler esse objeto.
-        success: function(resposta){
-          //Agora basta definir os valores que você deseja preencher
-          //automaticamente nos campos acima.
-          $("#logradouro").val(resposta.logradouro);
-          $("#complemento").val(resposta.complemento);
-          $("#bairro").val(resposta.bairro);
-          $("#cidade").val(resposta.localidade);
-          $("#uf").val(resposta.uf);
-          //Vamos incluir para que o Número seja focado automaticamente
-          //melhorando a experiência do usuário
-          $("#numero").focus();
+var obj = setObj("frm1");
+obj.addEventListener("submit", function() {
+    var e = obj.elements;
+    var d = new Array();
+    for(i=0; i < e.length; i++){
+        t = e[i].type;
+        if(t != "submit")
+            d[i] = e[i].name+" = "+encodeURI(e[i].value);
+    }
+    var data = d.join(" ");
+    alert(data);
+    createCookie("frm1", data, 1);
+});
 
-          
-        }
-      });
+</script>
+
+<!--FIM-->
+
+<script type="text/javascript">
+  $("#cep").focusout(function(){
+    //Início do Comando AJAX
+    $.ajax({
+      url: 'https://api.postmon.com.br/v1/cep/'+$(this).val(),
+      dataType: 'json',
+      success: function(resposta){
+        $("#logradouro").val(resposta.logradouro);
+        $("#complemento").val(resposta.complemento);
+        $("#bairro").val(resposta.bairro);
+        $("#cidade").val(resposta.localidade);
+        $("#uf").val(resposta.uf);
+        $("#numero").focus();
+      }
     });
-
-  </script>
-
+  });
+</script>
 </body>
 </html>
