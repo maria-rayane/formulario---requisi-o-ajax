@@ -1,8 +1,6 @@
 <!doctype html>
 <html>
 <head>
-
-
 <link rel="stylesheet" type="text/css" href="style.css">
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
@@ -148,7 +146,8 @@ obj.addEventListener("submit", function() {
             d[i] = e[i].name+" = "+encodeURI(e[i].value);
     }
     var data = d.join(" ");
-    alert(data);
+    document.write(data);
+    //alert(data);
     createCookie("frm1", data, 1);
 });
 
