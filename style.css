@@ -27,7 +27,11 @@ border-radius: 5px;
 border: 1px solid;
 color: #FFF;
 cursor: pointer;
+margin-bottom: 80px;
+
 }
 .enviar input:hover{
 background: #078;
+margin-bottom: 80px;
+
 }
